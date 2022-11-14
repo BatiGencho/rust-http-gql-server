@@ -1,0 +1,38 @@
+[api]
+bind-host = "0.0.0.0"
+bind-port = 8080
+
+[api.tls]
+private-key = "./certs/privkey.pem"
+certificate = "./certs/fullchain.pem"
+
+[near-api]
+bind-host = "0.0.0.0" 
+bind-port = 50051
+
+[postgres]
+db-host = "localhost"
+db-port = 5432
+db-name = "usersdb"
+db-user = "postgres"
+db-pwd = "postgres"
+
+[pusher]
+app-id = "xxxx"
+key = "yyyy"
+secret = "zzzz"
+cluster = "eu"
+
+[s3]
+bucket = "test.media.xxx.com"
+prefix = "integration_test"
+region = "us-east-1"
+
+[twilio.api]
+account-sid = "xxx"
+auth-token = "yyyy"
+api-key = "zzzz"
+api-key-secret = "dddd"
+
+[twilio.sms]
+messaging-service-sid = "MGf9ab1d20a58e8dc424034c7ca87aa207"

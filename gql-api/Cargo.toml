@@ -1,0 +1,75 @@
+[package]
+name = "gql-api"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "gql-api"
+path = "src/bin/gql-api.rs"
+
+[dependencies]
+# own dependencies
+s3_uploader = { path = "../crates/s3-uploader" }
+pusher_client = { path = "../crates/pusher-client" }
+twilio_client = { path = "../crates/twilio-client" }
+
+# crates.io dependencies
+anyhow = "1.0"
+argh = "0.1"
+async-trait = "0.1"
+derive_more = "0.99"
+displaydoc = "0.2"
+futures = { version = "0.3", features = ["compat"] }
+futures-macro = "=0.3"
+indexmap = "1.8"
+juniper = "0.15.9"
+maplit = "1.0"
+metered = "0.8"
+rand = "0.7"
+serde = { version = "1.0.137", features = ["derive"] }
+serde_json = "1.0"
+strum = { version = "0.24", features = ["derive"] }
+strum_macros = "0.24"
+thiserror = "1.0"
+tokio = { version = "1.2", features = [ "full" ] }
+toml = "0.5"
+tokio-postgres = { version = "0.7.5", features = ["with-uuid-0_8", "with-chrono-0_4"] }
+uuid = { version = "0.8", features = ["serde", "v4"] }
+warp = { version = "0.3.2", features = ["tls"] }
+env_logger = "0.9.0"
+log = "0.4.14"
+graphql_client = { version = "0.10.0", features = ["reqwest-blocking"] }
+reqwest = { version = "^0.11", features = ["json", "blocking"] }
+clap = "3.1.6"
+ansi_term = "0.12"
+rust-argon2 = "1.0.0"
+jsonwebtoken = "8.0.1"
+chrono = { version = "0.4", features= ["serde"] }
+pretty_env_logger = "0.4"
+lazy_static = "1.4.0"
+near-account-id = "0.12.0"
+ed25519-dalek = "1.0.1"
+bs58 = "0.4.0"
+hex = "0.4.3"
+validator = { version = "0.15.0", features = ["derive", "phone"] }
+serde_path_to_error = "0.1"
+bytes = "1.1.0"
+wasmium-random = "1.0.0"
+tonic = "0.7"
+prost = "0.10"
+tonic-build = "0.7"
+pusher = "*"
+num-bigint = "0.4"
+slugify = "0.1.0"
+dotenv = { version = "0.15.0" }
+bincode_aes = "1.0.1"
+sha256 = "1.0.3"
+diesel_migrations = { version = "1.4.0", features = ["postgres"] }
+diesel = { version = "1.4.8", features = ["postgres"] }
+
+[dev-dependencies]
+pretty_assertions = "1.2.0"
+serde_prometheus = "0.1"
+
+[build-dependencies]
+tonic-build = "0.7"

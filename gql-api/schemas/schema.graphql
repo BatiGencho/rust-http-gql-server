@@ -1,0 +1,153 @@
+type User {
+  id: String!
+  name: String
+  username: String!
+  phoneNumber: String
+  email: String
+  createdAt: Float!
+  walletId: String!
+  walletBalance: String!
+  userType: String!
+  userStatus: String!
+}
+#-----------------
+
+input NewEvent {
+  eventName: String!
+}
+
+type Event {
+  id: String!
+  eventName: String!
+  eventSlug: String!
+  startDate: Float
+  endDate: Float
+  entryTime: Float
+  description: String
+  createdAt: Float!
+  isVirtual: Boolean
+  isFeatured: Boolean
+  venueName: String
+  venueLocation: String
+  coverPhotoUrl: String     #aws s3 url
+  thumbnailUrl: String      #aws s3 url
+  eventStatus: EventStatus! #DRAFT, MINTING, FINAL
+  createdByUser: String!
+  tickets: [Ticket]!
+}
+
+input UpdateEvent {
+  startDate: Float
+  endDate: Float
+  entryTime: Float
+  description: String
+  isVirtual: Boolean
+  isFeatured: Boolean
+  venueName: String
+  venueLocation: String
+  cover_photo_base64: String     #base64 encoded image data
+  thumbnail_base64: String       #base64 encoded image data
+}
+
+"Event Filter for filtering events acc. to featured or none-featured status"
+enum EventFilter {
+  "Only featured events"
+  FEATURED
+  "Only none-featured events"
+  NONE_FEATURED
+  "All events"
+  ALL
+}
+
+"Event Status"
+enum EventStatus {
+  "Event is in initial status"
+  DRAFT
+  "Event is in minting status"
+  MINTING
+  "Event is in final status"
+  FINAL
+}
+
+#-----------------
+
+type Ticket {
+  id: String!
+  createdAt: Float!
+  ticketName: String
+  ticketSlug: String
+  description: String
+  price: String
+  maxReleasePrice: String
+  quantityAvailable: Int
+  minPurchaseQuantity: Int
+  maxPurchaseQuantity: Int
+  allowTransfers: Boolean
+  eventId: String!
+}
+
+input NewTicket {
+  ticket_name: String!
+  description: String
+  price: String
+  maxReleasePrice: String
+  quantityAvailable: Int
+  minPurchaseQuantity: Int
+  maxPurchaseQuantity: Int
+  allowTransfers: Boolean
+  eventId: String!
+}
+
+input UpdateTicket {
+  id: String!
+  ticket_name: String
+  description: String
+  price: String
+  maxReleasePrice: String
+  quantityAvailable: Int
+  minPurchaseQuantity: Int
+  maxPurchaseQuantity: Int
+  allowTransfers: Boolean
+}
+
+#-----------------
+
+type NewMintNftsRequest {
+    ticketId: String!
+}
+
+type NewMintNftsResponse {
+    txHash: String!
+}
+
+#-----------------
+#-----------------
+type QueryRoot {
+  apiVersion: String!
+  events(id: String, eventSlug: String, filter: EventFilter): [Event]!
+  users(id: String): [User]!
+  mintNfts(request: NewMintNftsRequest!): NewMintNftsResponse!
+  me: User!
+}
+
+type MutationRoot {
+  # events (returned value is the added / updated event)
+  registerEvent(newEvent: NewEvent!): Event!
+  updateEvent(updateEvent: UpdateEvent!): Event!
+  deleteEvent(id: String!): Boolean!
+
+  # event tickets (returned values are the added / updated tickets)
+  addEventTickets(newTickets: [NewTicket!]!): [Ticket!]!
+  updateEventTickets(updateTickets: [UpdateTicket!]!): [Ticket!]!
+  deleteEventTickets(ids: [String!]!): Boolean!
+}
+
+type SubscriptionRoot {
+  eventSub(id: String): Event!
+}
+
+schema {
+  query: QueryRoot,
+  mutation: MutationRoot,
+  subscription: SubscriptionRoot
+}
