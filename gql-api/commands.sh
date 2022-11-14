@@ -6,6 +6,6 @@ RUST_BACKTRACE=full PROTO_DIR="../../protos/nearapiservice.proto" AWS_CONFIG_FIL
 
 # deploy gql-api to aws registry
 DOCKER_BUILDKIT=1 docker build --file Dockerfile --tag gql-api --target release --build-arg BUILD_ENV=release --build-arg RUST_VERSION=stable --build-arg RUSTC_WRAPPER="sccache" .
-aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin 382480309488.dkr.ecr.eu-west-2.amazonaws.com
-docker tag gql-api:latest 382480309488.dkr.ecr.eu-west-2.amazonaws.com/gql-api:latest
+aws ecr get-login-password --region eu-west-2 | docker login --username XXX --password-stdin XXXX
+docker tag gql-api:latest tttttt.dkr.ecr.eu-west-2.amazonaws.com/gql-api:latest
 docker push 382480309488.dkr.ecr.eu-west-2.amazonaws.com/gql-api:latest
